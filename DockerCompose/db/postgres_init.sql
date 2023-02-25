@@ -6,3 +6,6 @@ CREATE TABLE IF NOT EXISTS users(
     updated_at timestamptz NOT NULL DEFAULT (now()),
     CONSTRAINT PK_users PRIMARY KEY (acct)
 );
+
+INSERT INTO users(acct, pwd, fullname) VALUES
+ ('CoulsonChen', 'pass.123', 'Coulson Chen');
