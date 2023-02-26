@@ -12,6 +12,7 @@ func main() {
 
 	r := gin.Default()
 	r.GET("/users", userController.GetAllUsers)
+	r.GET("/users/byfullname/:fullname", userController.GetUserByFullName)
 
 	ginerr := r.Run(":8081")
 	if ginerr != nil {

@@ -7,6 +7,7 @@ import (
 
 type IUsersService interface {
 	GetAllUsers() (*[]models.User, error)
+	GetUserByFullName(fullName string) (user *models.User, err error)
 }
 
 type UsersService struct {
@@ -21,6 +22,12 @@ func UsersServiceProvider(db *gorm.DB) *UsersService {
 
 func (service *UsersService) GetAllUsers() (users *[]models.User, err error) {
 	service.db.Find(&users)
+	err = nil
+	return
+}
+
+func (service *UsersService) GetUserByFullName(fullName string) (user *models.User, err error) {
+	service.db.Where("fullname = ?", fullName).First(&user)
 	err = nil
 	return
 }

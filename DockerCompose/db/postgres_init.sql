@@ -8,4 +8,11 @@ CREATE TABLE IF NOT EXISTS users(
 );
 
 INSERT INTO users(acct, pwd, fullname) VALUES
- ('CoulsonChen', 'pass.123', 'Coulson Chen');
+ ('CoulsonChen', 'pass.123', 'Coulson Chen'),
+ ('CoulsonChen1', 'pass_1', 'Coulson Chen - 1'),
+ ('CoulsonChen2', 'pass_2', 'Coulson Chen - 2'),
+ ('CoulsonChen3', 'pass_3', 'Coulson Chen - 3'),
+ ('CoulsonChen4', 'pass_4', 'Coulson Chen - 4'),
+ ('CoulsonChen5', 'pass_5', 'Coulson Chen - 5'),
+ ('CoulsonChen6', 'pass_6', 'Coulson Chen - 6'),
+ ('CoulsonChen7', 'pass_7', 'Coulson Chen - 7');

@@ -5,9 +5,9 @@ import (
 )
 
 type User struct {
-	Acct        string    `json:"acct" gorm:"primaryKey`
-	Pwd         string    `json:"pwd"`
-	FullName    string    `json:"fullname"`
-	DateCreated time.Time `json:"created_at"`
-	DateUpdated time.Time `json:"updated_at"`
+	Acct      string `gorm:"primaryKey`
+	Pwd       string
+	FullName  string `gorm:"column:fullname"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }

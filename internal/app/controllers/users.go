@@ -26,3 +26,14 @@ func (uc *UsersController) GetAllUsers(context *gin.Context) {
 	context.JSON(http.StatusOK, users)
 	return
 }
+
+func (uc *UsersController) GetUserByFullName(context *gin.Context) {
+	fullname := context.Param("fullname")
+	user, err := uc.service.GetUserByFullName(fullname)
+	if err != nil {
+		panic(err)
+	}
+
+	context.JSON(http.StatusOK, user)
+	return
+}

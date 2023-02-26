@@ -11,11 +11,11 @@ func DBProvider() (db *gorm.DB) {
 	if err != nil {
 		panic(err)
 	}
-	sqlConn, err := db.DB()
-	if err != nil {
-		panic(err)
-	}
-	defer sqlConn.Close()
+	// sqlConn, err := db.DB()
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer sqlConn.Close()
 
 	return
 }
