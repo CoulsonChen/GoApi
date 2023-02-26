@@ -8,6 +8,7 @@ import (
 type IUsersService interface {
 	GetAllUsers() (*[]models.User, error)
 	GetUserByFullName(fullName string) (user *models.User, err error)
+	CreateUser(user models.User) (useracct *string, err error)
 }
 
 type UsersService struct {
@@ -28,6 +29,13 @@ func (service *UsersService) GetAllUsers() (users *[]models.User, err error) {
 
 func (service *UsersService) GetUserByFullName(fullName string) (user *models.User, err error) {
 	service.db.Where("fullname = ?", fullName).First(&user)
+	err = nil
+	return
+}
+
+func (service *UsersService) CreateUser(user models.User) (useracct *string, err error) {
+	service.db.Create(&user)
+	useracct = &user.Acct
 	err = nil
 	return
 }

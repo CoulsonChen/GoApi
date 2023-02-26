@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/CoulsonChen/GoApi/internal/app/services"
+	"github.com/CoulsonChen/GoApi/internal/pkg/models"
 	"github.com/gin-gonic/gin"
 )
 
@@ -35,5 +36,21 @@ func (uc *UsersController) GetUserByFullName(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, user)
+	return
+}
+
+func (uc *UsersController) CreateUser(context *gin.Context) {
+	var user models.User
+	err := context.BindJSON(&user)
+	if err != nil {
+		panic(err)
+	}
+
+	useracct, err := uc.service.CreateUser(user)
+	if err != nil {
+		panic(err)
+	}
+
+	context.JSON(http.StatusOK, useracct)
 	return
 }
