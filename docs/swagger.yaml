@@ -1,4 +1,18 @@
-host: localhost:8083
+definitions:
+  models.User:
+    properties:
+      acct:
+        type: string
+      createdAt:
+        type: string
+      fullName:
+        type: string
+      pwd:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+host: localhost:8081
 info:
   contact:
     name: nathan.lu
@@ -37,7 +51,7 @@ paths:
         name: user
         required: true
         schema:
-          type: string
+          $ref: '#/definitions/models.User'
       produces:
       - application/json
       responses:

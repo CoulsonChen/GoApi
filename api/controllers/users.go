@@ -3,8 +3,8 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/CoulsonChen/GoApi/app/services"
 	"github.com/CoulsonChen/GoApi/pkg/models"
+	"github.com/CoulsonChen/GoApi/pkg/services"
 	"github.com/gin-gonic/gin"
 )
 
@@ -62,7 +62,7 @@ func (uc *UsersController) GetUserByFullName(context *gin.Context) {
 // @Tags users
 // @Accept json
 // @Produce json
-// @Param user body string true "user'info"
+// @Param user body models.User true "user'info"
 // @Success 200 {array} string
 // @Router /users [post]
 func (uc *UsersController) CreateUser(context *gin.Context) {
