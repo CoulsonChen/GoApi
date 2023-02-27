@@ -7,7 +7,7 @@
 package services
 
 import (
-	"github.com/CoulsonChen/GoApi/internal/pkg/db"
+	"github.com/CoulsonChen/GoApi/pkg/db"
 	"github.com/google/wire"
 )
 

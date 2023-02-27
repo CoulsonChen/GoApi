@@ -1,0 +1,76 @@
+host: localhost:8083
+info:
+  contact:
+    name: nathan.lu
+    url: https://CoulsonChen.github.io/
+  description: Gin swagger
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Gin swagger
+  version: "1.0"
+paths:
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Get all user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Get all users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Create user
+      parameters:
+      - description: user'info
+        in: body
+        name: user
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create user
+      tags:
+      - users
+  /users/byfullname/{fullname}:
+    get:
+      consumes:
+      - application/json
+      description: Get user by fullname
+      parameters:
+      - description: user'sfullname
+        in: path
+        name: fullname
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Get user by fullname
+      tags:
+      - users
+swagger: "2.0"

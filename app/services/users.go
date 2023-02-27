@@ -1,7 +1,7 @@
 package services
 
 import (
-	"github.com/CoulsonChen/GoApi/internal/pkg/models"
+	"github.com/CoulsonChen/GoApi/pkg/models"
 	"gorm.io/gorm"
 )
 

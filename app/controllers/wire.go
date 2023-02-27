@@ -3,7 +3,7 @@
 package controllers
 
 import (
-	"github.com/CoulsonChen/GoApi/internal/app/services"
+	"github.com/CoulsonChen/GoApi/app/services"
 	"github.com/google/wire"
 )
 
