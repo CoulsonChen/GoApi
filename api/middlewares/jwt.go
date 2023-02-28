@@ -9,16 +9,12 @@ import (
 )
 
 type JwtMiddleware struct {
-	service                services.IJwtService
-	JwtSecretKey           string
-	JwtTokenExpireDuration int
+	service services.IJwtService
 }
 
 func JwtMiddlewareProvider(s services.IJwtService) *JwtMiddleware {
 	return &JwtMiddleware{
-		service:                s,
-		JwtSecretKey:           "cc2e8a10-2512-4024-8580-84f06109630c",
-		JwtTokenExpireDuration: 120,
+		service: s,
 	}
 }
 

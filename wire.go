@@ -6,6 +6,7 @@ import (
 	"github.com/CoulsonChen/GoApi/api"
 	"github.com/CoulsonChen/GoApi/api/controllers"
 	"github.com/CoulsonChen/GoApi/api/middlewares"
+	"github.com/CoulsonChen/GoApi/pkg/config"
 	"github.com/CoulsonChen/GoApi/pkg/db"
 	"github.com/CoulsonChen/GoApi/pkg/services"
 	"github.com/google/wire"
@@ -24,6 +25,10 @@ var (
 		services.JwtServiceProvider,
 		wire.Bind(new(services.IJwtService), new(*services.JwtService)),
 	)
+	configProviderSet = wire.NewSet(
+		config.JwtConfigProvider,
+		config.DbConfigProvider,
+	)
 )
 
 var providerSet = wire.NewSet(
@@ -32,6 +37,7 @@ var providerSet = wire.NewSet(
 	controllerProviderSet,
 	middlewareProviderSet,
 	serviceProviderSet,
+	configProviderSet,
 )
 
 func InitHost() *route.Route {

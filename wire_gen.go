@@ -10,6 +10,7 @@ import (
 	"github.com/CoulsonChen/GoApi/api"
 	"github.com/CoulsonChen/GoApi/api/controllers"
 	"github.com/CoulsonChen/GoApi/api/middlewares"
+	"github.com/CoulsonChen/GoApi/pkg/config"
 	"github.com/CoulsonChen/GoApi/pkg/db"
 	"github.com/CoulsonChen/GoApi/pkg/services"
 	"github.com/google/wire"
@@ -18,9 +19,11 @@ import (
 // Injectors from wire.go:
 
 func InitHost() *route.Route {
-	gormDB := db.DBProvider()
+	dbConfig := config.DbConfigProvider()
+	gormDB := db.DBProvider(dbConfig)
 	usersService := services.UsersServiceProvider(gormDB)
-	jwtService := services.JwtServiceProvider()
+	jwtConfig := config.JwtConfigProvider()
+	jwtService := services.JwtServiceProvider(jwtConfig)
 	usersController := controllers.UsersControllerProvider(usersService, jwtService)
 	jwtMiddleware := middlewares.JwtMiddlewareProvider(jwtService)
 	routeRoute := route.RouteProvider(usersController, jwtMiddleware)
@@ -33,9 +36,11 @@ var (
 	controllerProviderSet = wire.NewSet(controllers.UsersControllerProvider)
 	middlewareProviderSet = wire.NewSet(middlewares.JwtMiddlewareProvider)
 	serviceProviderSet    = wire.NewSet(services.UsersServiceProvider, wire.Bind(new(services.IUsersService), new(*services.UsersService)), services.JwtServiceProvider, wire.Bind(new(services.IJwtService), new(*services.JwtService)))
+	configProviderSet     = wire.NewSet(config.JwtConfigProvider, config.DbConfigProvider)
 )
 
 var providerSet = wire.NewSet(db.DBProvider, route.RouteProvider, controllerProviderSet,
 	middlewareProviderSet,
 	serviceProviderSet,
+	configProviderSet,
 )

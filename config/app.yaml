@@ -1,0 +1,10 @@
+jwt:
+  JwtSecretKey: "cc2e8a10-2512-4024-8580-84f06109630c"
+  JwtTokenExpireDuration: 120
+db:
+  Host: "localhost"
+  Port: "5432"
+  User: "root"
+  Password: "root"
+  Dbname: "root"
+  Sslmode: "disable"
