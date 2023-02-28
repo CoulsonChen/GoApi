@@ -27,6 +27,7 @@ func UsersControllerProvider(s services.IUsersService,
 // @Tags users
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Success 200 {array} string
 // @Router /users [get]
 func (uc *UsersController) GetAllUsers(context *gin.Context) {
@@ -46,6 +47,7 @@ func (uc *UsersController) GetAllUsers(context *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param fullname path string true "user'sfullname"
+// @Security BearerAuth
 // @Success 200 {array} string
 // @Router /users/byfullname/{fullname} [get]
 func (uc *UsersController) GetUserByFullName(context *gin.Context) {
@@ -66,6 +68,7 @@ func (uc *UsersController) GetUserByFullName(context *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param user body models.User true "user's info"
+// @Security BearerAuth
 // @Success 200 {array} string
 // @Router /users [post]
 func (uc *UsersController) CreateUser(context *gin.Context) {

@@ -1,7 +1,6 @@
 package services
 
 import (
-	"errors"
 	"time"
 
 	"github.com/CoulsonChen/GoApi/pkg/models"
@@ -29,7 +28,7 @@ func (j *JwtService) GenToken(account string) (string, error) {
 	c := models.MyClaims{
 		account,
 		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Duration(j.JwtTokenExpireDuration)).Unix(),
+			ExpiresAt: time.Now().Add(time.Minute * time.Duration(j.JwtTokenExpireDuration)).Unix(),
 			Issuer:    "Coulson",
 		},
 	}
@@ -40,15 +39,14 @@ func (j *JwtService) GenToken(account string) (string, error) {
 }
 
 func (j *JwtService) ParseToken(tokenString string) (*models.MyClaims, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &models.MyClaims{}, func(token *jwt.Token) (i interface{}, err error) {
-		return j.JwtSecretKey, nil
+	jwt, err := jwt.ParseWithClaims(tokenString, &models.MyClaims{}, func(token *jwt.Token) (i interface{}, e error) {
+		return []byte(j.JwtSecretKey), nil
 	})
-	if err != nil {
-		return nil, err
+	if err == nil && jwt != nil {
+		if claim, ok := jwt.Claims.(*models.MyClaims); ok && jwt.Valid {
+			return claim, nil
+		}
 	}
-	// Valid token
-	if claims, ok := token.Claims.(*models.MyClaims); ok && token.Valid {
-		return claims, nil
-	}
-	return nil, errors.New("invalid token")
+	// panic(err)
+	return nil, err
 }

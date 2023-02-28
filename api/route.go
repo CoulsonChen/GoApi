@@ -28,7 +28,7 @@ func RouteProvider(userscontroller *controllers.UsersController, jwtMiddleware *
 }
 
 func (r *Route) SetupRouter() {
-	r.router.GET("/users", r.userscontroller.GetAllUsers)
+	r.router.GET("/users", r.jwtMiddleware.JWTAuthMiddleware(), r.userscontroller.GetAllUsers)
 	r.router.GET("/users/byfullname/:fullname", r.userscontroller.GetUserByFullName)
 	r.router.POST("/users", r.userscontroller.CreateUser)
 	r.router.POST("/users/login", r.userscontroller.Login)

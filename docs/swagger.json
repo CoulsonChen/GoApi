@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "Gin swagger",
-        "title": "Gin swagger",
+        "title": "Gin swagger:Bearer cc2e8a10-2512-4024-8580-84f06109630c",
         "contact": {
             "name": "nathan.lu",
             "url": "https://CoulsonChen.github.io/"
@@ -17,6 +17,11 @@
     "paths": {
         "/users": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all user",
                 "consumes": [
                     "application/json"
@@ -41,6 +46,11 @@
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create user",
                 "consumes": [
                     "application/json"
@@ -78,6 +88,11 @@
         },
         "/users/byfullname/{fullname}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get user by fullname",
                 "consumes": [
                     "application/json"

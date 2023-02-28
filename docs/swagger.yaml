@@ -28,7 +28,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: Gin swagger
+  title: Gin swagger:Bearer cc2e8a10-2512-4024-8580-84f06109630c
   version: "1.0"
 paths:
   /users:
@@ -45,6 +45,8 @@ paths:
             items:
               type: string
             type: array
+      security:
+      - BearerAuth: []
       summary: Get all users
       tags:
       - users
@@ -68,6 +70,8 @@ paths:
             items:
               type: string
             type: array
+      security:
+      - BearerAuth: []
       summary: Create user
       tags:
       - users
@@ -91,6 +95,8 @@ paths:
             items:
               type: string
             type: array
+      security:
+      - BearerAuth: []
       summary: Get user by fullname
       tags:
       - users

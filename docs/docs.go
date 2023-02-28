@@ -24,6 +24,11 @@ const docTemplate = `{
     "paths": {
         "/users": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all user",
                 "consumes": [
                     "application/json"
@@ -48,6 +53,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create user",
                 "consumes": [
                     "application/json"
@@ -85,6 +95,11 @@ const docTemplate = `{
         },
         "/users/byfullname/{fullname}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get user by fullname",
                 "consumes": [
                     "application/json"
@@ -204,7 +219,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8081",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Gin swagger",
+	Title:            "Gin swagger:Bearer cc2e8a10-2512-4024-8580-84f06109630c",
 	Description:      "Gin swagger",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
