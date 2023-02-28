@@ -35,6 +35,7 @@ func (r *Route) SetupRouter() {
 	r.router.POST("/users/login", r.userscontroller.Login)
 	r.router.DELETE("/users/:acct", r.jwtMiddleware.JWTAuthMiddleware(), r.userscontroller.DeleteUser)
 	r.router.PUT("/users/", r.jwtMiddleware.JWTAuthMiddleware(), r.userscontroller.UpdateUser)
+	r.router.POST("/users/withPagination", r.jwtMiddleware.JWTAuthMiddleware(), r.userscontroller.GetAllUsersWithAcctPagination)
 }
 
 func (r *Route) SetupSwagger() {
