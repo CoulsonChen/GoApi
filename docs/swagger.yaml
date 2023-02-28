@@ -75,6 +75,31 @@ paths:
       summary: Create user
       tags:
       - users
+    put:
+      consumes:
+      - application/json
+      description: User update
+      parameters:
+      - description: user info
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      security:
+      - BearerAuth: []
+      summary: User update
+      tags:
+      - users
   /users/{acct}:
     delete:
       consumes:

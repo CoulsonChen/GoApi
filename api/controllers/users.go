@@ -78,7 +78,7 @@ func (uc *UsersController) CreateUser(context *gin.Context) {
 		panic(err)
 	}
 
-	useracct, err := uc.service.CreateUser(user)
+	useracct, err := uc.service.CreateUser(&user)
 	if err != nil {
 		panic(err)
 	}
@@ -103,13 +103,13 @@ func (uc *UsersController) Login(context *gin.Context) {
 		panic(err)
 	}
 
-	isSuccess, err := uc.service.Login(login)
+	isSuccess, err := uc.service.Login(&login)
 	if err != nil {
 		panic(err)
 	}
 
 	token := ""
-	if *isSuccess {
+	if isSuccess {
 		t, err := uc.jwtservice.GenToken(login.Acct)
 		if err != nil {
 			panic(err)
@@ -139,5 +139,30 @@ func (uc *UsersController) DeleteUser(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, user)
+	return
+}
+
+// @Summary User update
+// @Schemes
+// @Description User update
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body models.User true "user info"
+// @Security BearerAuth
+// @Success 200 {array} string
+// @Router /users [put]
+func (uc *UsersController) UpdateUser(context *gin.Context) {
+	var user models.User
+	err := context.BindJSON(&user)
+	if err != nil {
+		panic(err)
+	}
+	isSuccess, err := uc.service.UpdateUser(&user)
+	if err != nil {
+		panic(err)
+	}
+
+	context.JSON(http.StatusOK, isSuccess)
 	return
 }

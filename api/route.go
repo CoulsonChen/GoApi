@@ -33,8 +33,8 @@ func (r *Route) SetupRouter() {
 	r.router.GET("/users/byfullname/:fullname", r.jwtMiddleware.JWTAuthMiddleware(), r.userscontroller.GetUserByFullName)
 	r.router.POST("/users", r.jwtMiddleware.JWTAuthMiddleware(), r.userscontroller.CreateUser)
 	r.router.POST("/users/login", r.userscontroller.Login)
-	// r.router.DELETE("/users/:acct", r.userscontroller.DeleteUser)
 	r.router.DELETE("/users/:acct", r.jwtMiddleware.JWTAuthMiddleware(), r.userscontroller.DeleteUser)
+	r.router.PUT("/users/", r.jwtMiddleware.JWTAuthMiddleware(), r.userscontroller.UpdateUser)
 }
 
 func (r *Route) SetupSwagger() {
