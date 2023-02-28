@@ -46,8 +46,14 @@ func (r *Route) SetupSwagger() {
 	}
 }
 
-func (r *Route) Run() {
-	ginerr := r.router.Run(fmt.Sprintf(":%d", r.port))
+func (r *Route) Run(isHttps bool) {
+	var ginerr error
+	if isHttps {
+		ginerr = r.router.RunTLS(fmt.Sprintf(":%d", r.port), "./tls/server.crt", "./tls/server.key")
+	} else {
+		ginerr = r.router.Run(fmt.Sprintf(":%d", r.port))
+	}
+
 	if ginerr != nil {
 		panic(ginerr)
 	}

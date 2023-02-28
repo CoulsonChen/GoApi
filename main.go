@@ -17,5 +17,5 @@ func main() {
 
 	routing.SetupRouter()
 	routing.SetupSwagger()
-	routing.Run()
+	routing.Run(false)
 }
