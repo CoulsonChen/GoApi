@@ -28,7 +28,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: Gin swagger:Bearer cc2e8a10-2512-4024-8580-84f06109630c
+  title: Gin swagger
   version: "1.0"
 paths:
   /users:
@@ -73,6 +73,31 @@ paths:
       security:
       - BearerAuth: []
       summary: Create user
+      tags:
+      - users
+  /users/{acct}:
+    delete:
+      consumes:
+      - application/json
+      description: User delete
+      parameters:
+      - description: user account
+        in: path
+        name: acct
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      security:
+      - BearerAuth: []
+      summary: User delete
       tags:
       - users
   /users/byfullname/{fullname}:

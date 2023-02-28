@@ -120,3 +120,24 @@ func (uc *UsersController) Login(context *gin.Context) {
 	context.JSON(http.StatusOK, token)
 	return
 }
+
+// @Summary User delete
+// @Schemes
+// @Description User delete
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param acct path string true "user account"
+// @Security BearerAuth
+// @Success 200 {array} string
+// @Router /users/{acct} [delete]
+func (uc *UsersController) DeleteUser(context *gin.Context) {
+	acct := context.Param("acct")
+	user, err := uc.service.DeleteUserByAccount(acct)
+	if err != nil {
+		panic(err)
+	}
+
+	context.JSON(http.StatusOK, user)
+	return
+}

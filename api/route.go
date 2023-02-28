@@ -28,10 +28,13 @@ func RouteProvider(userscontroller *controllers.UsersController, jwtMiddleware *
 }
 
 func (r *Route) SetupRouter() {
+	// r.router.GET("/users", r.userscontroller.GetAllUsers)
 	r.router.GET("/users", r.jwtMiddleware.JWTAuthMiddleware(), r.userscontroller.GetAllUsers)
-	r.router.GET("/users/byfullname/:fullname", r.userscontroller.GetUserByFullName)
-	r.router.POST("/users", r.userscontroller.CreateUser)
+	r.router.GET("/users/byfullname/:fullname", r.jwtMiddleware.JWTAuthMiddleware(), r.userscontroller.GetUserByFullName)
+	r.router.POST("/users", r.jwtMiddleware.JWTAuthMiddleware(), r.userscontroller.CreateUser)
 	r.router.POST("/users/login", r.userscontroller.Login)
+	// r.router.DELETE("/users/:acct", r.userscontroller.DeleteUser)
+	r.router.DELETE("/users/:acct", r.jwtMiddleware.JWTAuthMiddleware(), r.userscontroller.DeleteUser)
 }
 
 func (r *Route) SetupSwagger() {

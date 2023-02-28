@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "Gin swagger",
-        "title": "Gin swagger:Bearer cc2e8a10-2512-4024-8580-84f06109630c",
+        "title": "Gin swagger",
         "contact": {
             "name": "nathan.lu",
             "url": "https://CoulsonChen.github.io/"
@@ -148,6 +148,46 @@
                         "schema": {
                             "$ref": "#/definitions/models.Login"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{acct}": {
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "User delete",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "User delete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user account",
+                        "name": "acct",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {

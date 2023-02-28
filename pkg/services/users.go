@@ -12,6 +12,7 @@ type IUsersService interface {
 	GetUserByFullName(fullName string) (user *models.User, err error)
 	CreateUser(user models.User) (useracct *string, err error)
 	Login(login models.Login) (isSuccess *bool, err error)
+	DeleteUserByAccount(acct string) (user *models.User, err error)
 }
 
 type UsersService struct {
@@ -62,4 +63,10 @@ func (service *UsersService) Login(login models.Login) (isSuccess *bool, err err
 
 	result = true
 	return &result, nil
+}
+
+func (service *UsersService) DeleteUserByAccount(acct string) (user *models.User, err error) {
+	service.db.Table("users").Where("acct = ?", acct).Delete(&user)
+	err = nil
+	return
 }

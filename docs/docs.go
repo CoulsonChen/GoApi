@@ -169,6 +169,46 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/users/{acct}": {
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "User delete",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "User delete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user account",
+                        "name": "acct",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -219,7 +259,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8081",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Gin swagger:Bearer cc2e8a10-2512-4024-8580-84f06109630c",
+	Title:            "Gin swagger",
 	Description:      "Gin swagger",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
