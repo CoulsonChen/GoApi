@@ -9,6 +9,7 @@ package main
 import (
 	"github.com/CoulsonChen/GoApi/api"
 	"github.com/CoulsonChen/GoApi/api/controllers"
+	"github.com/CoulsonChen/GoApi/api/middlewares"
 	"github.com/CoulsonChen/GoApi/pkg/db"
 	"github.com/CoulsonChen/GoApi/pkg/services"
 	"github.com/google/wire"
@@ -19,8 +20,10 @@ import (
 func InitHost() *route.Route {
 	gormDB := db.DBProvider()
 	usersService := services.UsersServiceProvider(gormDB)
-	usersController := controllers.UsersControllerProvider(usersService)
-	routeRoute := route.RouteProvider(usersController)
+	jwtService := services.JwtServiceProvider()
+	usersController := controllers.UsersControllerProvider(usersService, jwtService)
+	jwtMiddleware := middlewares.JwtMiddlewareProvider(jwtService)
+	routeRoute := route.RouteProvider(usersController, jwtMiddleware)
 	return routeRoute
 }
 
@@ -28,11 +31,11 @@ func InitHost() *route.Route {
 
 var (
 	controllerProviderSet = wire.NewSet(controllers.UsersControllerProvider)
-	// middlewareProviderSet = wire.NewSet()
-	serviceProviderSet = wire.NewSet(services.UsersServiceProvider, wire.Bind(new(services.IUsersService), new(*services.UsersService)))
+	middlewareProviderSet = wire.NewSet(middlewares.JwtMiddlewareProvider)
+	serviceProviderSet    = wire.NewSet(services.UsersServiceProvider, wire.Bind(new(services.IUsersService), new(*services.UsersService)), services.JwtServiceProvider, wire.Bind(new(services.IJwtService), new(*services.JwtService)))
 )
 
 var providerSet = wire.NewSet(db.DBProvider, route.RouteProvider, controllerProviderSet,
-
+	middlewareProviderSet,
 	serviceProviderSet,
 )

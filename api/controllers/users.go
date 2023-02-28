@@ -9,12 +9,15 @@ import (
 )
 
 type UsersController struct {
-	service services.IUsersService
+	service    services.IUsersService
+	jwtservice services.IJwtService
 }
 
-func UsersControllerProvider(s services.IUsersService) *UsersController {
+func UsersControllerProvider(s services.IUsersService,
+	js services.IJwtService) *UsersController {
 	return &UsersController{
-		service: s,
+		service:    s,
+		jwtservice: js,
 	}
 }
 
@@ -62,7 +65,7 @@ func (uc *UsersController) GetUserByFullName(context *gin.Context) {
 // @Tags users
 // @Accept json
 // @Produce json
-// @Param user body models.User true "user'info"
+// @Param user body models.User true "user's info"
 // @Success 200 {array} string
 // @Router /users [post]
 func (uc *UsersController) CreateUser(context *gin.Context) {
@@ -78,5 +81,39 @@ func (uc *UsersController) CreateUser(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, useracct)
+	return
+}
+
+// @Summary User login
+// @Schemes
+// @Description User login
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param login body models.Login true "login info"
+// @Success 200 {array} string
+// @Router /users/login [post]
+func (uc *UsersController) Login(context *gin.Context) {
+	var login models.Login
+	err := context.BindJSON(&login)
+	if err != nil {
+		panic(err)
+	}
+
+	isSuccess, err := uc.service.Login(login)
+	if err != nil {
+		panic(err)
+	}
+
+	token := ""
+	if *isSuccess {
+		t, err := uc.jwtservice.GenToken(login.Acct)
+		if err != nil {
+			panic(err)
+		}
+		token = t
+	}
+
+	context.JSON(http.StatusOK, token)
 	return
 }

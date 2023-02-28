@@ -9,6 +9,9 @@ package main
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 // @host localhost:8081
 // schemes http
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 func main() {
 	routing := InitHost()
 

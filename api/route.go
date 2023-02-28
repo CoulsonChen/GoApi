@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/CoulsonChen/GoApi/api/controllers"
+	"github.com/CoulsonChen/GoApi/api/middlewares"
 	"github.com/CoulsonChen/GoApi/docs"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -14,13 +15,15 @@ type Route struct {
 	port            int
 	router          *gin.Engine
 	userscontroller *controllers.UsersController
+	jwtMiddleware   *middlewares.JwtMiddleware
 }
 
-func RouteProvider(userscontroller *controllers.UsersController) *Route {
+func RouteProvider(userscontroller *controllers.UsersController, jwtMiddleware *middlewares.JwtMiddleware) *Route {
 	return &Route{
 		port:            8081,
 		router:          gin.Default(),
 		userscontroller: userscontroller,
+		jwtMiddleware:   jwtMiddleware,
 	}
 }
 
@@ -28,6 +31,7 @@ func (r *Route) SetupRouter() {
 	r.router.GET("/users", r.userscontroller.GetAllUsers)
 	r.router.GET("/users/byfullname/:fullname", r.userscontroller.GetUserByFullName)
 	r.router.POST("/users", r.userscontroller.CreateUser)
+	r.router.POST("/users/login", r.userscontroller.Login)
 }
 
 func (r *Route) SetupSwagger() {

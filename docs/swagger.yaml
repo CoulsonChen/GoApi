@@ -1,4 +1,11 @@
 definitions:
+  models.Login:
+    properties:
+      acct:
+        type: string
+      pwd:
+        type: string
+    type: object
   models.User:
     properties:
       acct:
@@ -46,7 +53,7 @@ paths:
       - application/json
       description: Create user
       parameters:
-      - description: user'info
+      - description: user's info
         in: body
         name: user
         required: true
@@ -87,4 +94,33 @@ paths:
       summary: Get user by fullname
       tags:
       - users
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: User login
+      parameters:
+      - description: login info
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/models.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      summary: User login
+      tags:
+      - users
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
