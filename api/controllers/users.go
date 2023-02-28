@@ -40,6 +40,39 @@ func (uc *UsersController) GetAllUsers(context *gin.Context) {
 	return
 }
 
+// @Summary Get all users with pagination
+// @Schemes
+// @Description Get all users with pagination
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param paging body models.Paging true "paging model"
+// @Security BearerAuth
+// @Success 200 {array} string
+// @Router /users/withPagination [post]
+func (uc *UsersController) GetAllUsersWithAcctPagination(context *gin.Context) {
+	var paging models.Paging
+	err := context.BindJSON(&paging)
+	if err != nil {
+		panic(err)
+	}
+	dataCnt, pageCnt, users, err := uc.service.GetAllUsersWithAcctPagination(&paging)
+	if err != nil {
+		panic(err)
+	}
+	response := struct {
+		DataCount int
+		PageCount int
+		Users     []models.User
+	}{
+		DataCount: dataCnt,
+		PageCount: pageCnt,
+		Users:     *users,
+	}
+	context.JSON(http.StatusOK, response)
+	return
+}
+
 // @Summary Get user by fullname
 // @Schemes
 // @Description Get user by fullname

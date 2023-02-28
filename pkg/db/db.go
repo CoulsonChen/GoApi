@@ -2,7 +2,6 @@ package db
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/CoulsonChen/GoApi/pkg/config"
 	"gorm.io/driver/postgres"
@@ -21,7 +20,7 @@ func DBProvider(dbconfig config.DbConfig) (db *gorm.DB) {
 
 	db, err := gorm.Open(postgres.Open(dbURL), &gorm.Config{})
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
 		panic(err)
 	}
 	// sqlConn, err := db.DB()

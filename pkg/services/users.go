@@ -2,6 +2,8 @@ package services
 
 import (
 	"errors"
+	"fmt"
+	"math"
 	"time"
 
 	"github.com/CoulsonChen/GoApi/pkg/models"
@@ -15,6 +17,7 @@ type IUsersService interface {
 	Login(login *models.Login) (isSuccess bool, err error)
 	DeleteUserByAccount(acct string) (user *models.User, err error)
 	UpdateUser(user *models.User) (isSuccess bool, err error)
+	GetAllUsersWithAcctPagination(paging *models.Paging) (dataCnt int, pageCnt int, users *[]models.User, err error)
 }
 
 type UsersService struct {
@@ -29,6 +32,27 @@ func UsersServiceProvider(db *gorm.DB) *UsersService {
 
 func (service *UsersService) GetAllUsers() (users *[]models.User, err error) {
 	service.db.Find(&users)
+	err = nil
+	return
+}
+
+func (service *UsersService) GetAllUsersWithAcctPagination(paging *models.Paging) (dataCnt int, pageCnt int, users *[]models.User, err error) {
+	offset := (paging.PageNo - 1) * paging.Take
+	var rows int64
+	service.db.Table("users").Count(&rows)
+	dataCnt = int(rows)
+	pageCnt = int(math.Ceil(float64(rows) / float64(paging.Take)))
+
+	var order string
+	if paging.SortByAsc {
+		order = "asc"
+	} else {
+		order = "desc"
+	}
+	service.db.Table("users").
+		Limit(paging.Take).
+		Offset(offset).
+		Order(fmt.Sprintf("acct %s", order)).Find(&users)
 	err = nil
 	return
 }

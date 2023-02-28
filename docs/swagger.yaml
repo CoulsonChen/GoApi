@@ -6,6 +6,15 @@ definitions:
       pwd:
         type: string
     type: object
+  models.Paging:
+    properties:
+      pageNo:
+        type: integer
+      sortByAsc:
+        type: boolean
+      take:
+        type: integer
+    type: object
   models.User:
     properties:
       acct:
@@ -172,6 +181,32 @@ paths:
               type: string
             type: array
       summary: User login
+      tags:
+      - users
+  /users/withPagination:
+    post:
+      consumes:
+      - application/json
+      description: Get all users with pagination
+      parameters:
+      - description: paging model
+        in: body
+        name: paging
+        required: true
+        schema:
+          $ref: '#/definitions/models.Paging'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Get all users with pagination
       tags:
       - users
 securityDefinitions:

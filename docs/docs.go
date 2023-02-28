@@ -210,6 +210,48 @@ const docTemplate = `{
                 }
             }
         },
+        "/users/withPagination": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get all users with pagination",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get all users with pagination",
+                "parameters": [
+                    {
+                        "description": "paging model",
+                        "name": "paging",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Paging"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users/{acct}": {
             "delete": {
                 "security": [
@@ -260,6 +302,20 @@ const docTemplate = `{
                 },
                 "pwd": {
                     "type": "string"
+                }
+            }
+        },
+        "models.Paging": {
+            "type": "object",
+            "properties": {
+                "pageNo": {
+                    "type": "integer"
+                },
+                "sortByAsc": {
+                    "type": "boolean"
+                },
+                "take": {
+                    "type": "integer"
                 }
             }
         },
