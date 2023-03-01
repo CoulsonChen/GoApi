@@ -1,0 +1,217 @@
+definitions:
+  models.Login:
+    properties:
+      acct:
+        type: string
+      pwd:
+        type: string
+    type: object
+  models.Paging:
+    properties:
+      pageNo:
+        type: integer
+      sortByAsc:
+        type: boolean
+      take:
+        type: integer
+    type: object
+  models.User:
+    properties:
+      acct:
+        type: string
+      createdAt:
+        type: string
+      fullName:
+        type: string
+      pwd:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+host: localhost:8081
+info:
+  contact:
+    name: nathan.lu
+    url: https://CoulsonChen.github.io/
+  description: Gin swagger
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Gin swagger
+  version: "1.0"
+paths:
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Get all user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Get all users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Create user
+      parameters:
+      - description: user's info
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Create user
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: User update
+      parameters:
+      - description: user info
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      security:
+      - BearerAuth: []
+      summary: User update
+      tags:
+      - users
+  /users/{acct}:
+    delete:
+      consumes:
+      - application/json
+      description: User delete
+      parameters:
+      - description: user account
+        in: path
+        name: acct
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      security:
+      - BearerAuth: []
+      summary: User delete
+      tags:
+      - users
+  /users/byfullname/{fullname}:
+    get:
+      consumes:
+      - application/json
+      description: Get user by fullname
+      parameters:
+      - description: user'sfullname
+        in: path
+        name: fullname
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Get user by fullname
+      tags:
+      - users
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: User login
+      parameters:
+      - description: login info
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/models.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      summary: User login
+      tags:
+      - users
+  /users/withPagination:
+    post:
+      consumes:
+      - application/json
+      description: Get all users with pagination
+      parameters:
+      - description: paging model
+        in: body
+        name: paging
+        required: true
+        schema:
+          $ref: '#/definitions/models.Paging'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Get all users with pagination
+      tags:
+      - users
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
